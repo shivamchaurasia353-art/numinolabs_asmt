@@ -34,18 +34,32 @@ If you are using the checked-in workspace, the virtual environment already exist
 
 ## PostgreSQL
 
-Set these variables before running migrations:
+Render will usually provide `DATABASE_URL` automatically when you attach a PostgreSQL database. If you are configuring a database manually, set these variables before running migrations:
 
 ```bash
-export DJANGO_DB_ENGINE=django.db.backends.postgresql
-export DJANGO_DB_NAME=your_db_name
-export DJANGO_DB_USER=your_user
-export DJANGO_DB_PASSWORD=your_password
-export DJANGO_DB_HOST=127.0.0.1
-export DJANGO_DB_PORT=5432
+export DATABASE_URL=postgres://user:password@host:5432/dbname
+export DJANGO_SECRET_KEY=your-secret-key
+export DJANGO_DEBUG=False
+export DJANGO_ALLOWED_HOSTS=.onrender.com,your-service-name.onrender.com
 ```
 
-Install a PostgreSQL driver in your environment before using that configuration.
+Install a PostgreSQL driver in your environment before using that configuration. Render can supply this through its managed database.
+
+## Render deployment
+
+Use these values in the Render web service form:
+
+- Build Command: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
+- Start Command: `python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT`
+- Root Directory: leave blank unless you move the project into a subfolder
+
+Recommended environment variables on Render:
+
+- `DJANGO_SECRET_KEY`
+- `DJANGO_DEBUG=False`
+- `DJANGO_ALLOWED_HOSTS=.onrender.com,your-service-name.onrender.com`
+- `DJANGO_CSRF_TRUSTED_ORIGINS=https://*.onrender.com`
+- `DATABASE_URL` if not using Render's built-in database link
 
 ## Main routes
 
