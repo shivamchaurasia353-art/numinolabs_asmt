@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neighborhood Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'library/styles.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div>
+            <p class="eyebrow">Neighborhood Library</p>
+            <h1>Borrowing records that feel easy to keep up with.</h1>
+        </div>
+        <nav class="site-nav">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'book-create' %}">Add book</a>
+            <a href="{% url 'member-create' %}">Add member</a>
+            <a href="{% url 'loan-create' %}">New loan</a>
+            <a href="/api/">API</a>
+        </nav>
+    </header>
+
+    <main class="page-shell">
+        {% if messages %}
+            <section class="message-stack">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </section>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

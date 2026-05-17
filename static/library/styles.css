@@ -1,0 +1,241 @@
+:root {
+    color-scheme: light;
+    --bg: #f5f1e8;
+    --panel: #fffaf2;
+    --ink: #1f2721;
+    --muted: #64706a;
+    --accent: #2d5b4d;
+    --accent-soft: #dbe7df;
+    --border: #e2d8c7;
+    --warning: #a35b2f;
+    --shadow: 0 16px 45px rgba(42, 34, 21, 0.09);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    background:
+        radial-gradient(circle at top left, rgba(45, 91, 77, 0.1), transparent 28%),
+        radial-gradient(circle at top right, rgba(163, 91, 47, 0.1), transparent 24%),
+        var(--bg);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: end;
+    padding: 3rem clamp(1.25rem, 4vw, 3rem) 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.site-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.2rem, 4vw, 4.1rem);
+    line-height: 0.98;
+    margin: 0.3rem 0 0;
+    max-width: 13ch;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    color: var(--accent);
+    margin: 0;
+    font-weight: 700;
+}
+
+.site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: flex-end;
+}
+
+.site-nav a,
+.stack-form button,
+.record-meta button {
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    font-weight: 600;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.page-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+}
+
+.message-stack {
+    margin-bottom: 1rem;
+}
+
+.message {
+    padding: 0.95rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.78);
+    margin-bottom: 0.75rem;
+}
+
+.hero-grid,
+.content-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.hero-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 1rem;
+}
+
+.content-grid {
+    grid-template-columns: 1.5fr 1fr 1fr;
+}
+
+.stat-card,
+.panel {
+    background: rgba(255, 250, 242, 0.92);
+    border: 1px solid var(--border);
+    border-radius: 1.3rem;
+    box-shadow: var(--shadow);
+}
+
+.stat-card {
+    padding: 1.1rem 1.1rem 1.2rem;
+    min-height: 140px;
+}
+
+.stat-card span,
+.panel-head p,
+.compact-list span,
+.record-list span,
+.empty-state {
+    color: var(--muted);
+}
+
+.stat-card strong {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.accent {
+    background: linear-gradient(180deg, #eff6f1 0%, #ffffff 100%);
+}
+
+.warning {
+    background: linear-gradient(180deg, #f8efea 0%, #ffffff 100%);
+}
+
+.panel {
+    padding: 1.2rem;
+}
+
+.panel-head {
+    margin-bottom: 1rem;
+}
+
+.panel-head h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.record-list,
+.compact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.record-list li,
+.compact-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-top: 1px solid rgba(226, 216, 199, 0.8);
+}
+
+.record-list li:first-child,
+.compact-list li:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.record-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 0.5rem;
+}
+
+.record-meta button,
+.stack-form button {
+    cursor: pointer;
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+}
+
+.stack-form p {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0 0 1rem;
+}
+
+.stack-form input,
+.stack-form select,
+.stack-form textarea {
+    width: 100%;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--border);
+    background: #fff;
+    font: inherit;
+}
+
+.stack-form label {
+    font-weight: 600;
+}
+
+.form-panel {
+    max-width: 720px;
+}
+
+.empty-state {
+    padding: 0.75rem 0;
+}
+
+@media (max-width: 980px) {
+    .site-header,
+    .content-grid,
+    .hero-grid {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
+
+    .site-header {
+        align-items: start;
+    }
+
+    .site-nav {
+        justify-content: flex-start;
+    }
+}

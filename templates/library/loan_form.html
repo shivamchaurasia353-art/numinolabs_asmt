@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel form-panel">
+    <div class="panel-head">
+        <h2>Record a loan</h2>
+        <p>Track what left the shelf and when it comes back.</p>
+    </div>
+    <form method="post" class="stack-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save loan</button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="panel form-panel">
+    <div class="panel-head">
+        <h2>Add a book</h2>
+        <p>Keep the catalogue tidy and simple.</p>
+    </div>
+    <form method="post" class="stack-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save book</button>
+    </form>
+</section>
+{% endblock %}

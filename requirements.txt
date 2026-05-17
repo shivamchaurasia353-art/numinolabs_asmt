@@ -1,0 +1,4 @@
+Django==5.2.3
+djangorestframework==3.16.0
+django-filter==25.2
+psycopg[binary]==3.2.9

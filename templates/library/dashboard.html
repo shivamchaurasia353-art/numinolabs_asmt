@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero-grid">
+    <article class="stat-card accent">
+        <span>Books</span>
+        <strong>{{ book_count }}</strong>
+        <small>Catalogued and ready to lend</small>
+    </article>
+    <article class="stat-card">
+        <span>Members</span>
+        <strong>{{ member_count }}</strong>
+        <small>Active neighborhood accounts</small>
+    </article>
+    <article class="stat-card">
+        <span>Active loans</span>
+        <strong>{{ active_loan_count }}</strong>
+        <small>Still out with readers</small>
+    </article>
+    <article class="stat-card warning">
+        <span>Overdue</span>
+        <strong>{{ overdue_count }}</strong>
+        <small>Needs a quick follow-up</small>
+    </article>
+</section>
+
+<section class="content-grid">
+    <div class="panel">
+        <div class="panel-head">
+            <h2>Current loans</h2>
+            <p>Loan slips that are still open.</p>
+        </div>
+        {% if active_loans %}
+            <ul class="record-list">
+                {% for loan in active_loans %}
+                    <li>
+                        <div>
+                            <strong>{{ loan.book.title }}</strong>
+                            <span>{{ loan.member.name }}</span>
+                        </div>
+                        <div class="record-meta">
+                            <span>Due {{ loan.due_at|date:'M j, Y' }}</span>
+                            <form method="post" action="{% url 'loan-return' loan.pk %}">
+                                {% csrf_token %}
+                                <button type="submit">Mark returned</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-state">No active loans right now.</p>
+        {% endif %}
+    </div>
+
+    <div class="panel">
+        <div class="panel-head">
+            <h2>Recently added books</h2>
+            <p>Latest catalogue entries.</p>
+        </div>
+        <ul class="compact-list">
+            {% for book in recent_books %}
+                <li>
+                    <strong>{{ book.title }}</strong>
+                    <span>{{ book.author }} · {{ book.copies_available }}/{{ book.copies_total }} copies</span>
+                </li>
+            {% empty %}
+                <li class="empty-state">No books yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="panel">
+        <div class="panel-head">
+            <h2>Recent members</h2>
+            <p>People already in the system.</p>
+        </div>
+        <ul class="compact-list">
+            {% for member in recent_members %}
+                <li>
+                    <strong>{{ member.name }}</strong>
+                    <span>{{ member.email }}</span>
+                </li>
+            {% empty %}
+                <li class="empty-state">No members yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}
