@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 
 from .forms import BookForm, LoanForm, MemberForm
@@ -89,3 +89,24 @@ class LoanViewSet(viewsets.ModelViewSet):
 		loan = self.get_object()
 		loan.mark_returned()
 		return Response(self.get_serializer(loan).data)
+
+
+@api_view(['GET'])
+def dashboard_stats(request):
+	active_loans_qs = Loan.objects.filter(returned_at__isnull=True)
+	overdue_loans_qs = active_loans_qs.filter(due_at__lt=timezone.now())
+	recent_loans = LoanSerializer(
+		Loan.objects.select_related('book', 'member').filter(returned_at__isnull=True).order_by('-borrowed_at')[:6],
+		many=True,
+	).data
+	recent_books = BookSerializer(Book.objects.order_by('-created_at')[:6], many=True).data
+	recent_members = MemberSerializer(Member.objects.order_by('-created_at')[:6], many=True).data
+	return Response({
+		'book_count': Book.objects.count(),
+		'member_count': Member.objects.count(),
+		'active_loan_count': active_loans_qs.count(),
+		'overdue_count': overdue_loans_qs.count(),
+		'recent_loans': recent_loans,
+		'recent_books': recent_books,
+		'recent_members': recent_members,
+	})
